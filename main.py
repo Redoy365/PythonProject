@@ -12,6 +12,7 @@ class Hospital:
         self.root=root
         self.root.title("Hospital Management System")
         self.root.geometry("1600x800+0+0")
+        self.root.iconbitmap("icon.ico")
         # =======================   Header Layout ===========================
         lbltitle = Label(self.root, bd=20, relief=RIDGE,text="HOSPITAL MANAGEMENT SYSTEM", fg="red", bg="white", font=("times new roman",50,"bold"))
         lbltitle.place(relx=0, rely=0, relheight=0.15, relwidth=1)
@@ -25,11 +26,11 @@ class Hospital:
         DataframeRight = LabelFrame(Dataframe, bd=10, relief=RIDGE, padx=10,font=("arial",12,"bold"), text="Patient Information")
         DataframeRight.place(relx=0.6, rely=0, relheight=1, relwidth=0.4)
         # ===========================   Button Layout =========================
-        Dataframe = Frame(self.root, bd=20, relief=RIDGE)
-        Dataframe.place(relx=0, rely=0.65, relheight=0.1, relwidth=1)
+        Dataframe_btn = Frame(self.root, bd=20, relief=RIDGE)
+        Dataframe_btn.place(relx=0, rely=0.65, relheight=0.1, relwidth=1)
         # ===========================   DataBase  Layout  =====================
-        Dataframe = Frame(self.root, bd=20, relief=RIDGE)
-        Dataframe.place(relx=0, rely=0.75, relheight=0.25, relwidth=1)
+        Dataframe_base = Frame(self.root, bd=20, relief=RIDGE)
+        Dataframe_base.place(relx=0, rely=0.75, relheight=0.25, relwidth=1)
         # =======================    Dataframe Left  =======================
         # =======================    Dataframe Left  =======================
         # =======================    Dataframe Left  =======================
@@ -148,10 +149,42 @@ class Hospital:
         RefenceEntry = Entry(DataframeLeft, font=("times new roman",12,"bold"))
         RefenceEntry.place(relx=0.70, rely=0.88, relheight=0.09, relwidth=0.29)
 
+        # =========================   Textview Right ============================
+        # =========================   Textview Right ============================
+        # =========================   Textview Right ============================
 
+        textview = Text(DataframeRight, font=("times new roman",13,"bold"))
+        textview.place(relx=0, rely=0, relheight=1, relwidth=1)
+
+        # ===========================   Button Layout =========================
+        # ===========================   Button Layout =========================
+        # ===========================   Button Layout =========================
+        
+        #   Button  1   ==============
+        button1 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "white", text="Prescription")
+        button1.place(relx=0, rely=0.01, relheight=1, relwidth=0.16)
+        #   Button  2   ==============
+        button2 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "white", text="Prescription Date")
+        button2.place(relx=0.161, rely=0.01, relheight=1, relwidth=0.16)
+        #   Button  3   ==============
+        button3 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "white", text="Update")
+        button3.place(relx=0.322, rely=0.01, relheight=1, relwidth=0.16)
+        #   Button  4   ==============
+        button4 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "white", text="Delete")
+        button4.place(relx=0.483, rely=0.01, relheight=1, relwidth=0.16)
+        #   Button  5   ==============
+        button5 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "white", text="Reset")
+        button5.place(relx=0.644, rely=0.01, relheight=1, relwidth=0.16)
+        #   Button  6   ==============
+        button6 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "white", text="Exit")
+        button6.place(relx=0.805, rely=0.01, relheight=1, relwidth=0.16)
+        #   Button  7   ==============
+        button7 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "red", text="+ H")
+        button7.place(relx=0.967, rely=0.01, relheight=1, relwidth=0.03)
 
 
 root = Tk()
+
 ob = Hospital(root)
 
 root.mainloop()
