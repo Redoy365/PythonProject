@@ -50,9 +50,21 @@ class Hospital:
         # ===========================   Button Layout =========================
         Dataframe_btn = Frame(self.root, bd=20, relief=RIDGE)
         Dataframe_btn.place(relx=0, rely=0.65, relheight=0.1, relwidth=1)
+        
         # ===========================   DataBase  Layout  =====================
         Dataframe_base = Frame(self.root, bd=20, relief=RIDGE)
         Dataframe_base.place(relx=0, rely=0.75, relheight=0.25, relwidth=1)
+
+        def fetch_all_data():
+            conn = mysql.connector.connect(host = "localhost",username = "Redoy365",password="a4t23zaRedoy", database = "mydata")
+            my_Cursor = conn.cursor()
+            my_Cursor.execute("SELECT * FROM hospital")
+            myresult = my_Cursor.fetchall()
+
+            for x in myresult:
+                print(x)
+
+        
         # =======================    Dataframe Left  =======================
         # =======================    Dataframe Left  =======================
         # =======================    Dataframe Left  =======================
@@ -161,15 +173,118 @@ class Hospital:
         textview = Text(DataframeRight, font=("times new roman",13,"bold"))
         textview.place(relx=0, rely=0, relheight=1, relwidth=1)
 
-        # ===========================   Button Layout =========================
-        # ===========================   Button Layout =========================
-        # ===========================   Button Layout =========================
+
+        #===========================================  Functionality Declaration ==================================
+        #===========================================  Functionality Declaration ==================================
+        #===========================================  Functionality Declaration ==================================
+
+        def Prescription_add():
+             print("in function")
+             if self.Nameoftablets.get() == "" or self.Ref.get() == "":
+                print("in if")
+                messagebox.showerror("Error","All fiels are required")
+             else:
+                print("in else")
+                conn = mysql.connector.connect(host = "localhost",username = "Redoy365",password="a4t23zaRedoy", database = "mydata")
+                my_Cursor = conn.cursor()
+                my_Cursor.execute("INSERT INTO hospital values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
+
+                                                                                                        self.Nameoftablets.get(),
+                                                                                                        self.Ref.get(),
+                                                                                                        self.Dose.get(),
+                                                                                                        self.NumberofTables.get(),
+                                                                                                        self.Lot.get(),
+                                                                                                        self.IssueDate.get(),
+                                                                                                        self.Expdate.get(),
+                                                                                                        self.DailyDose.get(),
+                                                                                                        self.Storage.get(),
+                                                                                                        self.NHSnumber.get(),
+                                                                                                        self.Pname.get(),
+                                                                                                        self.DBO.get(),
+                                                                                                        self.address.get()
+                                                                                                        ))
+                
+                conn.commit()
+                conn.close()
+
+                self.Nameoftablets.set("")
+                self.Ref.set("")
+                self.Dose.set("")
+                self.NumberofTables.set("")
+                self.Lot.set("")
+                self.IssueDate.set("")
+                self.Expdate.set("")
+                self.DailyDose.set("")
+                self.Storage.set("")
+                self.NHSnumber.set("")
+                self.Pname.set("")
+                self.DBO.set("")
+                self.address.set("")
+                self.SideEffect.set("")
+                self.FurtherInfo.set("")
+                self.BloodPressure.set("")
+                self.Medication.set("")
+                self.PretientId.set("")
+                messagebox.showinfo("Record Hase been inserted")
+
+
         
+        def Reset_para():
+            self.Nameoftablets.set("")
+            self.Ref.set("")
+            self.Dose.set("")
+            self.NumberofTables.set("")
+            self.Lot.set("")
+            self.IssueDate.set("")
+            self.Expdate.set("")
+            self.DailyDose.set("")
+            self.Storage.set("")
+            self.NHSnumber.set("")
+            self.Pname.set("")
+            self.DBO.set("")
+            self.address.set("")
+            self.SideEffect.set("")
+            self.FurtherInfo.set("")
+            self.BloodPressure.set("")
+            self.Medication.set("")
+            self.PretientId.set("")
+           
+            messagebox.showinfo("Reset successful")
+
+        def func(self):
+            x = messagebox.askquestion("askquestion", "Are you sure?")
+            
+            if x == "yes":
+                print("Yes")
+            else:
+                print("No")
+                
+
+        def Prescription_show(self):
+            conn = mysql.connector.connect(host = "localhost",username = "Redoy365",password="a4t23zaRedoy", database = "mydata")
+            my_Cursor = conn.cursor()
+            my_Cursor.execute("SELECT * FROM hospital")
+            rows = my_Cursor.fetchall()
+            
+            if len(rows) != 0:
+                self.hospital_table.delete(*self.hospital_table.get_children())
+                for i in rows:
+                    self.hospital_table.insert("",END, values=i)
+                conn.commit()
+            conn.close()
+            
+        
+            
+
+                    # ===========================   Button Layout =========================
+                    # ===========================   Button Layout =========================
+                    # ===========================   Button Layout =========================
+
         #   Button  1   ==============
-        button1 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "white", text="Prescription")
+        button1 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "white", text="Prescription", command=Prescription_show)
         button1.place(relx=0, rely=0.01, relheight=1, relwidth=0.16)
         #   Button  2   ==============
-        button2 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "white", text="Prescription Date")
+        button2 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "white", text="Prescription Add", command=Prescription_add)
         button2.place(relx=0.161, rely=0.01, relheight=1, relwidth=0.16)
         #   Button  3   ==============
         button3 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "white", text="Update")
@@ -178,10 +293,10 @@ class Hospital:
         button4 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "white", text="Delete")
         button4.place(relx=0.483, rely=0.01, relheight=1, relwidth=0.16)
         #   Button  5   ==============
-        button5 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "white", text="Reset")
+        button5 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "white", text="Clear", command=Reset_para)
         button5.place(relx=0.644, rely=0.01, relheight=1, relwidth=0.16)
         #   Button  6   ==============
-        button6 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "white", text="Exit")
+        button6 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "white", text="Exit", command=func)
         button6.place(relx=0.805, rely=0.01, relheight=1, relwidth=0.16)
         #   Button  7   ==============
         button7 = Button(Dataframe_btn, font=("arial",13,"bold"),padx=10,pady=10,bg="green", fg= "red", text="+ H")
@@ -230,45 +345,36 @@ class Hospital:
         self.hospital_table.column("dob",width=100)
         self.hospital_table.column("address",width=100)
 
-        
+        # self.Prescription_pair()
         self.hospital_table.pack(fill=BOTH, expand=1)
 
         
-        #===========================================  Functionality Declaration ==================================
-        #===========================================  Functionality Declaration ==================================
-        #===========================================  Functionality Declaration ==================================
+        # ======================================================
+        # ======================================================
+        # ======================================================
+        mydatabase_ = mysql.connector.connect(
+        host = "localhost",
+        username = "Redoy365",
+        password = "a4t23zaRedoy",
+        database = "mydata"
+        )
 
-        def iPrescriptionData(self):
-            if self.Nameoftablets.get() == "" or self.Ref.get() == "":
-                messagebox.showerror("Error","All fiels are required")
-            else:
-                conn = mysql.connector.connect(host = "localhost",username = "root",password="", database = "mydata")
-                my_Cursor = conn.cursor()
-                my_Cursor.execute("insert into hospital values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
+        mycursor = mydatabase_.cursor()
 
-                                                                                                        self.Nameoftablets.get(),
-                                                                                                        self.Ref.get(),
-                                                                                                        self.NumberofTables.get(),
-                                                                                                        self.Lot.get(),
-                                                                                                        self.IssueDate.get(),
-                                                                                                        self.Expdate.get(),
-                                                                                                        self.DailyDose.get(),
-                                                                                                        self.SideEffect.get(),
-                                                                                                        self.FurtherInfo.get(),
-                                                                                                        self.BloodPressure.get(),
-                                                                                                        self.Storage.get(),
-                                                                                                        self.Medication.get(),
-                                                                                                        self.PretientId.get(),
-                                                                                                        self.NHSnumber.get(),
-                                                                                                        self.Pname.get(),
-                                                                                                        self.DBO.get(),
-                                                                                                        self.address.get()
-                                                                                                        ))
-                messagebox.showinfo("Record Hase been inserted")
-                conn.commit()
-                conn.close()
+        mycursor.execute("SELECT * FROM hospital")
 
+        myresult = mycursor.fetchall()
+        print(myresult[0])
 
+        i=1
+        for x in myresult:
+
+            self.hospital_table.insert('',i,text="",values=(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12]))
+            i=i+1
+
+        self.hospital_table.pack()
+
+           
 root = Tk()
 
 ob = Hospital(root)
